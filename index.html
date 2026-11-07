@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#090b0e" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%239e3024'/%3E%3Ctext x='32' y='44' font-family='sans-serif' font-size='36' font-weight='700' text-anchor='middle' fill='%23f2e5c7'%3EBP%3C/text%3E%3C/svg%3E" />
+  <title>Night Shift Danger — Barnsley Pizza</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="game-shell">
+    <canvas id="scene" aria-label="3D view inside Barnsley Pizza"></canvas>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+
+    <section id="title-screen" class="screen visible">
+      <div class="title-top"><span class="brand-mark">BP</span><span>Barnsley Pizza · Est. 1987</span><span class="top-right">EMPLOYEE ACCESS <i>●</i></span></div>
+      <div class="title-content">
+        <p class="eyebrow"><span class="live-dot"></span> AFTER HOURS // EMPLOYEE ORIENTATION</p>
+        <h1>NIGHT SHIFT<br /><em>DANGER</em><span class="title-period">.</span></h1>
+        <div class="title-rule"><span></span><small>ONE SHIFT. SIX HOURS. NO BACKUP.</small><span></span></div>
+        <p class="title-copy">The doors lock at midnight. The stage lights go dark.<br />And the family doesn't always leave.</p>
+        <button id="start-button" class="primary-button"><span>START NIGHT SHIFT</span><b>↗</b></button>
+        <div class="title-foot"><span>NEW EMPLOYEE · NIGHT 01</span><span>HEADPHONES RECOMMENDED</span></div>
+      </div>
+      <div class="title-side-note">KEEP THE LIGHTS ON<br />KEEP YOUR EYES OPEN</div>
+      <div class="title-bottom"><span>© BARNSLEY ENTERTAINMENT GROUP</span><span>TRAINING TAPE 04—B</span><span>BUILD 1.07.86</span></div>
+    </section>
+
+    <section id="intro-screen" class="screen">
+      <div class="brief-card">
+        <div class="brief-head"><span>INCOMING MESSAGE</span><span>23:58:04 · TAPE 01</span></div>
+        <div class="tape-icon">◖◖</div>
+        <h2>Before you clock in…</h2>
+        <p id="intro-caption" class="voice-caption">“Hey, new guy. If you're hearing this, you made it through orientation. The old place has a few… quirks.”</p>
+        <div class="brief-separator"></div>
+        <p class="brief-copy">Survive until <strong>6:00 AM</strong>. Watch the cameras, conserve the backup generator, and shut a security door when something reaches your hall. The light will tell you if it's still there.</p>
+        <div class="brief-controls"><span><kbd>Q</kbd><kbd>E</kbd> SECURITY DOORS</span><span><kbd>A</kbd><kbd>D</kbd> HALL LIGHTS</span><span><kbd>SPACE</kbd> CAMERAS</span></div>
+        <button id="clock-in-button" class="primary-button"><span>CLOCK IN</span><b>→</b></button>
+        <small class="brief-note">Mouse to look around · Click buttons to interact · Mobile touch controls supported</small>
+      </div>
+    </section>
+
+    <section id="hud" class="hud hidden" aria-live="polite">
+      <header class="hud-top">
+        <div class="hud-brand"><span class="mini-brand">BP</span><span>BARNSLEY PIZZA<small>SECURITY OFFICE · NIGHT 01</small></span></div>
+        <div class="clock-block"><span id="clock-time">12:00</span><small>AM</small><div class="clock-progress"><i id="time-progress"></i></div></div>
+        <div class="shift-label"><span class="live-dot"></span> NIGHT SHIFT IN PROGRESS</div>
+      </header>
+      <div class="status-row"><span id="status-message">ALL QUIET · CHECK THE CAMERAS</span><span id="cam-name" class="cam-name hidden">CAM 01 · SHOW STAGE</span></div>
+      <div class="camera-overlay hidden" id="camera-overlay">
+        <div class="camera-noise"></div>
+        <div class="cam-heading"><span>▣ <b>LIVE FEED</b></span><span id="feed-timestamp">REC ● 00:00:00</span></div>
+        <div class="cam-location"><b id="feed-location">SHOW STAGE</b><span id="feed-camera-number">CAM 01</span></div>
+        <div class="camera-map" id="camera-map">
+          <button data-cam="stage" class="cam-node selected"><span>01</span>STAGE</button>
+          <button data-cam="dining" class="cam-node"><span>02</span>DINING</button>
+          <button data-cam="arcade" class="cam-node"><span>03</span>ARCADE</button>
+          <button data-cam="kitchen" class="cam-node"><span>04</span>KITCHEN</button>
+          <button data-cam="west" class="cam-node"><span>05</span>WEST HALL</button>
+          <button data-cam="east" class="cam-node"><span>06</span>EAST HALL</button>
+          <div class="map-wire"></div>
+        </div>
+        <div class="cam-signal"><span>SIGNAL</span><i>▮▮▮▮▯</i><span>CAMERA SYSTEM // ACTIVE</span></div>
+      </div>
+      <div class="warning-banner hidden" id="warning-banner"><span>⚠</span><span id="warning-text">MOTION DETECTED</span></div>
+      <div class="bottom-ui">
+        <div class="resource-panel"><div class="power-head"><span>GENERATOR</span><b><span id="power-number">100</span><small>%</small></b></div><div class="power-track"><i id="power-fill"></i></div><div class="usage"><span>USAGE</span><div id="usage-bars"><i></i><i></i><i></i><i></i><i></i></div></div><span class="power-warning hidden" id="power-warning">LOW POWER — 20%</span></div>
+        <div class="action-controls">
+          <button class="control-button" id="left-door-button"><span class="control-icon">▤</span><span>WEST DOOR<small><kbd>Q</kbd> · <b id="west-door-state">OPEN</b></small></span><i class="control-lamp"></i></button>
+          <button class="control-button" id="left-light-button"><span class="control-icon">◉</span><span>WEST LIGHT<small><kbd>A</kbd> · <b id="west-light-state">OFF</b></small></span><i class="control-lamp"></i></button>
+          <button class="monitor-button" id="monitor-button"><span class="monitor-glyph">▣</span><b>CAMERAS</b><small><kbd>SPACE</kbd></small></button>
+          <button class="control-button" id="right-light-button"><span class="control-icon">◉</span><span>EAST LIGHT<small><kbd>D</kbd> · <b id="east-light-state">OFF</b></small></span><i class="control-lamp"></i></button>
+          <button class="control-button" id="right-door-button"><span class="control-icon">▤</span><span>EAST DOOR<small><kbd>E</kbd> · <b id="east-door-state">OPEN</b></small></span><i class="control-lamp"></i></button>
+        </div>
+        <div class="right-panel"><span class="shift-tip" id="shift-tip">TIP: CHECK THE STAGE OFTEN.</span><button id="pause-button" class="icon-button" aria-label="Pause game">Ⅱ</button><button id="audio-button" class="icon-button" aria-label="Toggle audio">♫</button></div>
+      </div>
+      <div id="subtitle" class="subtitle hidden"></div>
+      <div id="toast" class="toast hidden"></div>
+    </section>
+
+    <section id="pause-screen" class="screen modal-screen">
+      <div class="modal-card"><p class="eyebrow">SHIFT SUSPENDED</p><h2>TAKE A BREATH.</h2><p>The halls are still listening.</p><button id="resume-button" class="primary-button"><span>BACK TO WORK</span><b>→</b></button><button id="restart-button" class="text-button">RESTART NIGHT</button></div>
+    </section>
+    <section id="end-screen" class="screen modal-screen">
+      <div class="modal-card"><p id="end-kicker" class="eyebrow">SHIFT REPORT // 06:00</p><h2 id="end-title">YOU MADE IT.</h2><p id="end-copy">The sun is up. The dining room is quiet again.</p><div id="end-stats" class="end-stats"></div><button id="again-button" class="primary-button"><span>PLAY AGAIN</span><b>↻</b></button></div>
+    </section>
+
+    <div id="loading-cover"><span class="loading-mark">BP</span><span>OPENING FOR THE NIGHT…</span></div>
+  </main>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
