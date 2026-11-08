@@ -162,7 +162,7 @@ function updateInventory(){
   $('objective').textContent=player.items.size<3?'Find the things you left behind.':"The red door is waiting for you.";
 }
 function enterHouse(){
-  $('title-screen').classList.add('hidden');$('hud').classList.remove('hidden');player.started=true;player.x=0;player.z=11;startAudio();buildHall();updateInventory();showCard('THE FRONT HALL');setTimeout(()=>speak(lines[0]),750);
+  $('title-screen').classList.add('hidden');$('hud').classList.remove('hidden');player.started=true;player.x=0;player.z=11;flashlightOn=true;flashlight.intensity=32;startAudio();buildHall();updateInventory();showCard('THE FRONT HALL');setTimeout(()=>speak(lines[0]),750);
   if(matchMedia('(pointer:coarse)').matches){$('mobile-controls').classList.remove('hidden');}else requestLock();
 }
 
