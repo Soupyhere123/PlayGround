@@ -1,4 +1,11 @@
-# PlayGround
+# LIGHT'S OUT — Night Shift
+
+A browser-based first-person 3D horror game. You stayed late at the office; now the lights are going out, and you're not alone. Find all three fuses, restore the power, and escape.
+
+## Play
+
+Open `index.html` from a local web server (the game imports Three.js from jsDelivr). Use **WASD** to move, **mouse** to look, **E** to interact, and **F** to toggle your flashlight. On phones, rotate to landscape and use the on-screen joystick, look area, and action buttons. Voice narration uses the browser's built-in speech synthesis; sound and narration require a user gesture to start.
+
 
 <!-- omgithub:readme:start -->
 ## 🚀 Build, play, and remix with OMGithub

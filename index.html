@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+  <meta name="theme-color" content="#07090b" />
+  <link rel="icon" href="data:," />
+  <title>LIGHT'S OUT — Night Shift</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="game">
+    <canvas id="scene"></canvas>
+    <div class="grain"></div><div class="vignette"></div><div id="damage-flash"></div>
+    <header class="topbar"><div class="brand"><i></i> NIGHTWATCH <span>FACILITIES</span></div><div class="clock"><span class="pulse"></span> NIGHT SHIFT <b id="time">02:17 AM</b></div></header>
+    <section class="hud" id="hud" hidden>
+      <div class="objective"><small>YOUR ASSIGNMENT</small><strong id="objective">RESTORE THE POWER</strong><span id="objective-sub">Find the three missing fuses.</span></div>
+      <div class="power"><div class="power-top"><span>GRID POWER</span><b id="fuses">0 / 3</b></div><div class="power-track"><i id="power-fill"></i></div></div>
+      <div class="fear"><span>COMPOSURE</span><div class="fear-bars"><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="crosshair"><i></i><b></b><i></i></div>
+      <div class="prompt" id="prompt" hidden><kbd>E</kbd><span>INTERACT</span></div>
+      <div class="hint" id="hint"></div>
+      <div class="mobile-controls" id="mobile-controls"><div class="stick" id="stick"><i></i></div><button id="look-pad" aria-label="Look around"></button><button class="action-btn" id="interact-btn">USE</button><button class="flash-btn" id="flash-btn"><span>◉</span> LIGHT</button></div>
+    </section>
+    <section class="screen intro" id="intro">
+      <div class="intro-copy"><div class="eyebrow"><span class="line"></span> AN INTERACTIVE NIGHTMARE <span class="line"></span></div><h1>LIGHT'S<br><em>OUT.</em></h1><p class="subtitle">THE LAST ONE LEFT.</p><div class="story"><span>02:17 AM · MONDAY</span><p>The office emptied hours ago. You stayed to finish one last report.<br>Then the lights went out. Something else stayed.</p></div><button id="start-btn" class="primary"><span>BEGIN NIGHT SHIFT</span><b>↗</b></button><div class="controls-copy">WASD <span>MOVE</span><i></i> MOUSE <span>LOOK</span><i></i> E <span>INTERACT</span></div><div class="mobile-note">BEST PLAYED IN LANDSCAPE · HEADPHONES RECOMMENDED</div></div>
+      <div class="intro-stamp">EMPLOYEE<br>NO. 0841<br><b>UNACCOUNTED FOR</b></div>
+    </section>
+    <section class="screen ending" id="ending" hidden><div class="eyebrow">NIGHTWATCH FACILITIES · INCIDENT LOG 0841</div><h2 id="end-title">THE LIGHTS ARE BACK.</h2><p id="end-copy"></p><button id="restart-btn" class="primary"><span>PLAY AGAIN</span><b>↻</b></button></section>
+    <div class="landscape" id="landscape"><div class="rotate-icon">↻</div><span>TURN YOUR DEVICE SIDEWAYS</span><small>THIS NIGHT SHIFT IS BEST PLAYED IN LANDSCAPE</small></div>
+    <div class="flashlight" id="flashlight"></div>
+    <div class="audio-toggle" id="audio-toggle" title="Toggle audio">♫ <span>SOUND ON</span></div>
+  </main>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
